@@ -1,0 +1,8 @@
+aws_region        = "us-east-1"
+my_ip_cidr        = "YOUR_IP_ADDRESS/32"
+key_pair_name     = "your-ec2-keypair-name"
+ec2_instance_type = "t2.micro"
+db_instance_class = "db.t3.micro"
+db_name           = "tododb"
+db_username       = "postgres"
+db_password       = "ChangeMe_StrongPassword123"
