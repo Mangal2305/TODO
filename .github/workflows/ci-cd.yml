@@ -3,16 +3,15 @@ name: CI/CD - Build, Push, Deploy
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
-  BACKEND_IMAGE: ${{ github.repository_owner }}/todo-backend
-  FRONTEND_IMAGE: ${{ github.repository_owner }}/todo-frontend
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
@@ -20,6 +19,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Convert GitHub owner to lowercase
+        run: |
+          echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -37,8 +40,8 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:latest
-            ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }}
+            ghcr.io/${{ env.OWNER_LC }}/todo-backend:latest
+            ghcr.io/${{ env.OWNER_LC }}/todo-backend:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -48,20 +51,24 @@ jobs:
           context: ./frontend
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:latest
-            ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
+            ghcr.io/${{ env.OWNER_LC }}/todo-frontend:latest
+            ghcr.io/${{ env.OWNER_LC }}/todo-frontend:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
-    # Only run this job if EC2 deployment secrets have been configured.
+
     if: ${{ vars.ENABLE_DEPLOY == 'true' }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Convert GitHub owner to lowercase
+        run: |
+          echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
       - name: Deploy to EC2 over SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -90,16 +97,18 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          envs: GITHUB_REPOSITORY_OWNER
           script: |
             set -e
             cd ~/todo-app
-            export GITHUB_REPOSITORY_OWNER=${{ github.repository_owner }}
+
+            export GITHUB_REPOSITORY_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+
             export RDS_HOST="${{ secrets.RDS_HOST }}"
             export RDS_USER="${{ secrets.RDS_USER }}"
             export RDS_PASSWORD="${{ secrets.RDS_PASSWORD }}"
             export RDS_DB_NAME="${{ secrets.RDS_DB_NAME }}"
             export JWT_SECRET="${{ secrets.JWT_SECRET }}"
+
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d
             docker image prune -f

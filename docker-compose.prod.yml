@@ -1,13 +1,8 @@
 version: '3.8'
 
-# Used on the EC2 instance. Images are pulled from GHCR (built by CI/CD).
-# Backend connects to an external RDS Postgres instance instead of a local
-# postgres container. Provide these values via a .env file on the EC2 host
-# (see DEPLOYMENT.md) - never commit real secrets.
-
 services:
   backend:
-    image: ghcr.io/${GITHUB_REPOSITORY_OWNER}/todo-backend:latest
+    image: ghcr.io/mangal2305/todo-backend:latest
     container_name: todo-backend
     restart: unless-stopped
     environment:
@@ -23,7 +18,7 @@ services:
       - "5000:5000"
 
   frontend:
-    image: ghcr.io/${GITHUB_REPOSITORY_OWNER}/todo-frontend:latest
+    image: ghcr.io/mangal2305/todo-frontend:latest
     container_name: todo-frontend
     restart: unless-stopped
     depends_on:
