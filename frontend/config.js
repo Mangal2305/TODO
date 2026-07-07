@@ -4,4 +4,4 @@
 const API_URL = "http://localhost:5000/api";
 
 // Change it to your live backend domain:
-const API_URL = "https://todo-backend-xyz.onrender.com/api";
+const API_URL = 'https://your-backend-url.onrender.com/api'; // Keep only this one
