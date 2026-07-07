@@ -1,3 +1,4 @@
+require('dotenv').config(); // <-- ADD THIS AS LINE 1
 const { Pool } = require('pg');
 
 // Check if we are running on a live hosting platform like Render
