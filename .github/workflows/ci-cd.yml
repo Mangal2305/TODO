@@ -100,15 +100,6 @@ jobs:
           script: |
             set -e
             cd ~/todo-app
-
-            export GITHUB_REPOSITORY_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-
-            export RDS_HOST="${{ secrets.RDS_HOST }}"
-            export RDS_USER="${{ secrets.RDS_USER }}"
-            export RDS_PASSWORD="${{ secrets.RDS_PASSWORD }}"
-            export RDS_DB_NAME="${{ secrets.RDS_DB_NAME }}"
-            export JWT_SECRET="${{ secrets.JWT_SECRET }}"
-
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d
             docker image prune -f

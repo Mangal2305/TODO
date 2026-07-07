@@ -14,8 +14,6 @@ services:
       DB_NAME: ${RDS_DB_NAME}
       DB_SSL: "true"
       JWT_SECRET: ${JWT_SECRET}
-    ports:
-      - "5000:5000"
 
   frontend:
     image: ghcr.io/mangal2305/todo-frontend:latest
