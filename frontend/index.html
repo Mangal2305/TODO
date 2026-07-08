@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Todo App - Sign In</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo App - Sign In</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="auth-container">
@@ -17,14 +17,14 @@
       </div>
 
       <form id="loginForm" class="auth-form">
-        <input type="email" id="loginEmail" placeholder="Email" required />
-        <input type="password" id="loginPassword" placeholder="Password" required />
+        <input type="email" id="loginEmail" placeholder="Email" required autocomplete="username" />
+        <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password" />
         <button type="submit">Login</button>
       </form>
 
       <form id="registerForm" class="auth-form hidden">
-        <input type="email" id="registerEmail" placeholder="Email" required />
-        <input type="password" id="registerPassword" placeholder="Password (min 6 chars)" required />
+        <input type="email" id="registerEmail" placeholder="Email" required autocomplete="username" />
+        <input type="password" id="registerPassword" placeholder="Password (min 6 chars)" required autocomplete="new-password" />
         <button type="submit">Register</button>
       </form>
 
@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <script src="config.js"></script>
-  <script src="auth.js"></script>
+  <script src="config.js?v=1.0.1"></script>
+  <script src="auth.js?v=1.0.1"></script>
 </body>
 </html>
