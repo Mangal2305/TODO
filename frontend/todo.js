@@ -30,7 +30,8 @@ async function handleAuthError(res) {
 
 async function loadTodos() {
   try {
-    const res = await fetch(`${API_BASE}/todos`, { headers: authHeaders() });
+    // UPDATED: Replaced API_BASE with window.API_URL
+    const res = await fetch(`${window.API_URL}/todos`, { headers: authHeaders() });
     if (await handleAuthError(res)) return;
 
     const todos = await res.json();
@@ -42,7 +43,9 @@ async function loadTodos() {
 
 function renderTodos(todos) {
   todoList.innerHTML = '';
-  emptyMsg.classList.toggle('hidden', todos.length > 0);
+  if (emptyMsg) {
+    emptyMsg.classList.toggle('hidden', todos.length > 0);
+  }
 
   todos.forEach((todo) => {
     const li = document.createElement('li');
@@ -74,7 +77,8 @@ addTodoForm.addEventListener('submit', async (e) => {
   if (!title) return;
 
   try {
-    const res = await fetch(`${API_BASE}/todos`, {
+    // UPDATED: Replaced API_BASE with window.API_URL
+    const res = await fetch(`${window.API_URL}/todos`, {
       method: 'POST',
       headers: authHeaders(),
       body: JSON.stringify({ title }),
@@ -90,7 +94,8 @@ addTodoForm.addEventListener('submit', async (e) => {
 
 async function toggleTodo(id, completed) {
   try {
-    const res = await fetch(`${API_BASE}/todos/${id}`, {
+    // UPDATED: Replaced API_BASE with window.API_URL
+    const res = await fetch(`${window.API_URL}/todos/${id}`, {
       method: 'PUT',
       headers: authHeaders(),
       body: JSON.stringify({ completed }),
@@ -104,7 +109,8 @@ async function toggleTodo(id, completed) {
 
 async function deleteTodo(id) {
   try {
-    const res = await fetch(`${API_BASE}/todos/${id}`, {
+    // UPDATED: Replaced API_BASE with window.API_URL
+    const res = await fetch(`${window.API_URL}/todos/${id}`, {
       method: 'DELETE',
       headers: authHeaders(),
     });
@@ -121,4 +127,5 @@ logoutBtn.addEventListener('click', () => {
   window.location.href = 'index.html';
 });
 
+// Initial load call
 loadTodos();
