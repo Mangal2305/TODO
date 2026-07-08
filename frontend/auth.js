@@ -1,6 +1,7 @@
-// Redirect to dashboard if already logged in
+// Redirect to workspace if already logged in
 if (localStorage.getItem('token')) {
-  window.location.href = 'dashboard.html';
+  // FIXED: Pointing this to todo.html to match your todo view file
+  window.location.href = 'todo.html'; 
 }
 
 const loginTab = document.getElementById('loginTab');
@@ -41,7 +42,8 @@ loginForm.addEventListener('submit', async (e) => {
   const password = document.getElementById('loginPassword').value;
 
   try {
-    const res = await fetch(`${API_BASE}/auth/login`, {
+    // FIXED: Replaced API_BASE with window.API_URL
+    const res = await fetch(`${window.API_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -55,8 +57,11 @@ loginForm.addEventListener('submit', async (e) => {
 
     localStorage.setItem('token', data.token);
     localStorage.setItem('email', data.user.email);
-    window.location.href = 'dashboard.html';
+    
+    // FIXED: Pointing to todo.html
+    window.location.href = 'todo.html';
   } catch (err) {
+    console.error('Login request error:', err);
     showError('Could not connect to server');
   }
 });
@@ -68,7 +73,8 @@ registerForm.addEventListener('submit', async (e) => {
   const password = document.getElementById('registerPassword').value;
 
   try {
-    const res = await fetch(`${API_BASE}/auth/register`, {
+    // FIXED: Replaced API_BASE with window.API_URL
+    const res = await fetch(`${window.API_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -82,8 +88,11 @@ registerForm.addEventListener('submit', async (e) => {
 
     localStorage.setItem('token', data.token);
     localStorage.setItem('email', data.user.email);
-    window.location.href = 'dashboard.html';
+    
+    // FIXED: Pointing to todo.html
+    window.location.href = 'todo.html';
   } catch (err) {
+    console.error('Registration request error:', err);
     showError('Could not connect to server');
   }
 });
