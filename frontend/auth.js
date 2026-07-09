@@ -1,7 +1,7 @@
 // Redirect to workspace if already logged in
 if (localStorage.getItem('token')) {
-  // FIXED: Pointing this to todo.html to match your todo view file
-  window.location.href = 'todo.html'; 
+  // FIXED: Pointing this to dashboard.html to match your dashboard view file
+  window.location.href = 'dashboard.html'; 
 }
 
 const loginTab = document.getElementById('loginTab');
