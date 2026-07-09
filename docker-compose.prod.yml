@@ -1,20 +1,11 @@
-version: '3.8'
-
 services:
   backend:
     image: ghcr.io/mangal2305/todo-backend:latest
     container_name: todo-backend
     restart: unless-stopped
-    environment:
-      PORT: 5000
-      DB_HOST: ${RDS_HOST}
-      DB_PORT: 5432
-      DB_USER: ${RDS_USER}
-      DB_PASSWORD: ${RDS_PASSWORD}
-      DB_NAME: ${RDS_DB_NAME}
-      DB_SSL: "true"
-      JWT_SECRET: ${JWT_SECRET}
-
+    env_file: .env
+    ports:
+      - "5000:5000"
   frontend:
     image: ghcr.io/mangal2305/todo-frontend:latest
     container_name: todo-frontend
