@@ -11,7 +11,11 @@ const allowedOrigins = [
   'https://main.d23js2i5fwqmif.amplifyapp.com', // Your live AWS Amplify domain
   'http://localhost:3000',                       // Optional: For local front-end development
   'http://127.0.0.1:5500',                       // Optional: For Live Server VS Code extension
-  'http://51.21.33.30'                           // EC2 frontend
+  'http://51.21.33.30',                          // EC2 frontend (IP)
+  'http://todo.jo3.org',                         // EC2 frontend (domain)
+  'https://todo.jo3.org',                        // EC2 frontend (domain, HTTPS - future-proofing)
+  'http://www.todo.jo3.org',
+  'https://www.todo.jo3.org'
 ];
 app.use(cors({
   origin: function (origin, callback) {
