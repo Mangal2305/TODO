@@ -8,14 +8,15 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 // Updated CORS configuration to secure communication with your frontends
 const allowedOrigins = [
-  'https://main.d23js2i5fwqmif.amplifyapp.com', // Your live AWS Amplify domain
-  'http://localhost:3000',                       // Optional: For local front-end development
-  'http://127.0.0.1:5500',                       // Optional: For Live Server VS Code extension
-  'http://51.21.33.30',                          // EC2 frontend (IP)
-  'http://todo.jo3.org',                         // EC2 frontend (domain)
-  'https://todo.jo3.org',                        // EC2 frontend (domain, HTTPS - future-proofing)
+  'https://main.d23js2i5fwqmif.amplifyapp.com',
+  'http://localhost:3000',
+  'http://127.0.0.1:5500',
+  'http://51.21.33.30',
+  'http://todo.jo3.org',
+  'https://todo.jo3.org',
   'http://www.todo.jo3.org',
-  'https://www.todo.jo3.org'
+  'https://www.todo.jo3.org',
+  'https://hvfakja0j8.execute-api.eu-north-1.amazonaws.com' // API Gateway invoke URL
 ];
 app.use(cors({
   origin: function (origin, callback) {

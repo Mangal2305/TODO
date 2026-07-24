@@ -9,7 +9,7 @@ const pool = new Pool({
   // Ensure port is explicitly parsed as an integer number, not a string
   port: parseInt(process.env.DB_PORT || '5432', 10),
   user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'postgres',
+  password: process.env.DB_PASSWORD || '4fLwEWtkVjN3wuG',
   database: process.env.DB_NAME || 'tododb',
   // Enforce flexible SSL connection modes required by cloud database clusters
   ssl: isProduction || process.env.DB_SSL === 'true' 
